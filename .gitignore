@@ -1,0 +1,10 @@
+.idea/*
+Gemfile.lock
+.DS_Store
+.ruby-version
+.ruby-gemset
+coverage
+*.gem
+*.json
+*.bak
+.env
