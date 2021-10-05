@@ -1,20 +1,27 @@
 module ConsoleUI
   module_function
 
+  def greeting
+    puts "\nHi, dude!"
+    puts 'This util for control vagrants VMs on Vbox.'
+    puts 'Ctrl+C => Exiting'
+    puts
+  end
+
   def reader_console
     print "Your choice:\t"
-    gets.encode("utf-8", "CP866").chomp
+    gets.encode("utf-8", $terminal_enc).chomp
   end
 
   def print_vms_vagrant(vms)
-    template = "%2s\s\s%-15s\t%10s\t%s"
-    header = format(template, '#', 'name', 'id', 'status')
+    template = "%2s\s\s%-12s\t%10s\t%10s\t%12s"
+    header = format(template, '#', 'name', 'id', 'status', 'uptime')
 
     puts "\n", header
-    puts '-' * 60
+    puts '-' * 70
 
     vms.each_with_index do |(_id, vm), idx|
-      puts format(template, idx, vm.name, vm.id, vm.status)
+      puts format(template, idx, vm.name, vm.id, vm.status, vm.uptime)
     end
     puts
   end

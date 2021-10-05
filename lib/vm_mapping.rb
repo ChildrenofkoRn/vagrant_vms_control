@@ -1,16 +1,18 @@
 class VM_Mapping
-
   def self.mapping
-    vms_vagrant = VM_Vagrant.get_vms_list
-    vms_vbox = VM_Vbox.get_vms_list
+    vms_vagrant = VM_Vagrant.vms_list
+    vms_vbox = VM_Vbox.vms_list
 
     vms_vagrant.each_with_object({}) do |(id, name), hash|
-      uid_vbox = vms_vbox.keys.select { |id_vbox| /^#{id}/.match? id_vbox }.first
-      status = VM_Vbox.get_vm_status(uid_vbox)
+      box = find_vm_box(vms_vbox, id)
+      box = VM_Vbox.new(**box)
 
-      vm = VM_Vagrant.new(name: name, id: id, uid_vbox: uid_vbox, status: status)
-
-      hash[id] = vm
+      hash[id] = VM_Vagrant.new(name: name, id: id, box: box)
     end
+  end
+
+  def self.find_vm_box(boxes, id)
+    box = boxes.select { |vm| /^#{id}/.match? vm[:uid] }.first
+    box.nil? ? { name: nil, uid: nil } : box
   end
 end

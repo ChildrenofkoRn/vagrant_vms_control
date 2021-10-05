@@ -6,5 +6,8 @@ Gemfile.lock
 coverage
 *.gem
 *.json
+*.yaml
+#*.yml
+*.txt
 *.bak
 .env

@@ -1,7 +1,7 @@
 class VM_Vagrant
   extend Runner
 
-  VAGRANT_BIN = 'C:\HashiCorp\Vagrant\bin\vagrant.exe'
+  VAGRANT_BIN = $vagrant.freeze
   ACTIONS = {
     start:   'up',
     stop:    'halt',
@@ -9,10 +9,10 @@ class VM_Vagrant
     resume:  'resume',
   }.freeze
 
-  def self.get_vms_list
+  def self.vms_list
     params = [
       VAGRANT_BIN,
-      'global-status',
+      'global-status'
     ].join(' ')
 
     stdout = runner(params).first
@@ -20,26 +20,37 @@ class VM_Vagrant
     vms.map { |line| line.split(/\s+/).first(2) }
   end
 
-  ACTIONS.keys.each do |action|
+  ACTIONS.each_key do |action|
     define_method action do
       action(action)
     end
   end
 
-  attr_accessor :name, :id, :uid_vbox, :status
+  attr_accessor :name, :id, :box
 
-  def initialize(name:, id:, uid_vbox: nil, status: nil)
+  def initialize(name:, id:, box:)
     @name = name
     @id = id
-    @uid_vbox = uid_vbox
-    @status = status
+    @box = box
+  end
+
+  def update_status
+    @box.update_status
+  end
+
+  def uptime
+    @box.uptime
+  end
+
+  def status
+    @box.status
   end
 
   def to_h
     {
       name: name,
       id: id,
-      uid_vbox: uid_vbox
+      box: @box.to_h
     }
   end
 
@@ -49,11 +60,9 @@ class VM_Vagrant
     params = [
       VAGRANT_BIN,
       ACTIONS[action],
-      @id,
+      @id
     ].join(' ')
 
-    # p params
     self.class.runner_pipe(params)
   end
-
 end

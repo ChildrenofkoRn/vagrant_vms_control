@@ -2,24 +2,26 @@
 Simple CLI for manage vagrants VMs
 
 The utility doesn't change any VMs settings.  
-Its simply an interface for managing VMS status over Vagrant.
+Its just an interface over Vagrant1.
 
 ## requirements
 Windows, ruby 2.5+, Vagrant, Virtualbox
 
 ## using
 ```
-JSON file w VMS list hasn't been created yet.
+ruby vm_control.rb
 
 Hi, dude!
 This util for control vagrants VMs on Vbox.
 Ctrl+C => Exiting
 
- #  name                        id      status
-------------------------------------------------------------
- 0  runner                 d68534c      saved
- 1  deploy                 56f41c4      powered off
- 2  ubu_dev                690abe3      powered off
+JSON file w VMS list hasn't been created yet.
+
+ #  name                        id          status            uptime
+----------------------------------------------------------------------
+ 0  runner                 d68534c           saved
+ 1  deploy                 56f41c4     powered off
+ 2  ubu_dev                690abe3     powered off
 
 Your choice:    2
 
@@ -52,20 +54,21 @@ Bringing machine 'ubu_dev' up with 'virtualbox' provider...
 ==> ubu_dev: Machine already provisioned. Run `vagrant provision` or use the `--provision`
 ==> ubu_dev: flag to force provisioning. Provisioners marked to run always will still run.
 
- #  name                        id      status
-------------------------------------------------------------
- 0  runner                 d68534c      saved
- 1  deploy                 56f41c4      powered off
- 2  ubu_dev                690abe3      running
+ #  name                        id          status            uptime
+----------------------------------------------------------------------
+ 0  runner                 d68534c           saved
+ 1  deploy                 56f41c4     powered off
+ 2  ubu_dev                690abe3         running         00:00:33s
 
 Your choice:
 
 ```
 
 ## TODO
+ - possible to remaping vms vagrand-ID on vbox-UID, if ID isn't relevant
  - the ability to change index for VM in the vagrant-index:  
    ```c:\Users\$USERNAME$\.vagrant.d\data\machine-index\index```
- - add column with uptime VM
+ - update status all vms if vms list re-rendered
 
 
 [![badge-license][badge-license]][license]

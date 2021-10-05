@@ -1,0 +1,4 @@
+windows:
+    vagrant: 'C:\HashiCorp\Vagrant\bin\vagrant.exe'
+    vbox: 'C:\Program Files\Oracle\VirtualBox\VBoxManage.exe'
+    encoding: CP866
